@@ -4,6 +4,7 @@ import '../controllers/estadisticas_controller.dart';
 import '../widgets/stat_card.dart';
 import 'titulos_detalle_view.dart';
 import 'victorias_detalle_view.dart';
+import 'pole_position_view.dart';
 
 /// Vista principal que muestra las estadísticas generales de F1
 class EstadisticasView extends StatefulWidget {
@@ -145,6 +146,14 @@ class _EstadisticasViewState extends State<EstadisticasView> {
                         subtitulo: 'Salidas desde la pole',
                         valor: stats.polePositions.toString(),
                         colorValor: const Color(0xFF42A5F5),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PolePositionView(),
+                            ),
+                          );
+                        },
                       ),
 
                       // Podiums

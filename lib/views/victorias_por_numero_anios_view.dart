@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/victorias_service.dart';
 
-/// Vista que muestra pilotos por número de años con victorias
 class VictoriasPorNumeroAniosView extends StatefulWidget {
   const VictoriasPorNumeroAniosView({super.key});
 
@@ -29,9 +28,7 @@ class _VictoriasPorNumeroAniosViewState
         _cargando = true;
         _error = null;
       });
-
       final datos = await _service.obtenerPilotosPorAniosConVictorias();
-
       setState(() {
         _pilotos = datos;
         _cargando = false;
@@ -48,11 +45,16 @@ class _VictoriasPorNumeroAniosViewState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Victorias - Años con victorias'),
+        title: const Text(
+          'Victorias - Años con victorias',
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
         elevation: 0,
+        backgroundColor: const Color(0xFF0F172A),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      backgroundColor: const Color(0xFFF3F4F6),
+      backgroundColor: const Color(0xFF0F172A),
       body: _cargando
           ? const Center(child: CircularProgressIndicator())
           : _error != null
@@ -79,18 +81,15 @@ class _VictoriasPorNumeroAniosViewState
                 final posicion = index + 1;
                 final anios = piloto['anios'] as int;
 
-                // Color según posición
-                Color backgroundColor = Colors.white;
+                // Color oscuro y badge según posición
+                Color backgroundColor = const Color(0xFF1E293B);
                 Color? badgeColor;
                 if (posicion == 1) {
-                  backgroundColor = const Color(0xFFFFF9C4);
-                  badgeColor = const Color(0xFFFBC02D);
+                  badgeColor = const Color(0xFFE10600);
                 } else if (posicion == 2) {
-                  backgroundColor = const Color(0xFFE0E0E0);
-                  badgeColor = const Color(0xFF757575);
+                  badgeColor = const Color(0xFF60A5FA);
                 } else if (posicion == 3) {
-                  backgroundColor = const Color(0xFFFFE0B2);
-                  badgeColor = const Color(0xFFFF6F00);
+                  badgeColor = const Color(0xFFFBBF24);
                 }
 
                 return Container(
@@ -98,9 +97,12 @@ class _VictoriasPorNumeroAniosViewState
                   decoration: BoxDecoration(
                     color: backgroundColor,
                     borderRadius: BorderRadius.circular(12),
+                    border: posicion <= 3
+                        ? Border.all(color: badgeColor!, width: 2)
+                        : null,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.05),
+                        color: Colors.black.withOpacity(0.15),
                         blurRadius: 4,
                         offset: const Offset(0, 2),
                       ),
@@ -127,26 +129,13 @@ class _VictoriasPorNumeroAniosViewState
                         const SizedBox(width: 16),
                         // Información del piloto
                         Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                '${piloto['nombre']} ${piloto['apellido']}',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                piloto['pais'] as String,
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
+                          child: Text(
+                            piloto['nombre'],
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                         // Badge de años
@@ -157,9 +146,7 @@ class _VictoriasPorNumeroAniosViewState
                             vertical: 8,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(
-                              0xFF4CAF50,
-                            ).withValues(alpha: 0.1),
+                            color: const Color(0xFF4CAF50).withOpacity(0.15),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Column(
@@ -170,7 +157,7 @@ class _VictoriasPorNumeroAniosViewState
                                 style: const TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xFF4CAF50),
+                                  color: Colors.white,
                                   height: 1.0,
                                 ),
                               ),
@@ -179,7 +166,7 @@ class _VictoriasPorNumeroAniosViewState
                                 anios == 1 ? 'año' : 'años',
                                 style: TextStyle(
                                   fontSize: 11,
-                                  color: Colors.grey[600],
+                                  color: Colors.grey[300],
                                   height: 1.0,
                                 ),
                               ),

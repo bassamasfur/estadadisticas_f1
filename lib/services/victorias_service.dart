@@ -20,27 +20,66 @@ class VictoriasService {
   }
 
   Future<List<Map<String, dynamic>>> obtenerVictoriasEnUnAnio() async {
-    return [
-      {
-        'piloto': 'Max Verstappen',
-        'pais': 'Netherlands',
-        'victorias': 19,
-        'temporada': 2023,
-        'carreras_totales': 22,
-      },
-    ];
+    final uri = Uri.parse(
+      'https://f1-api-one.vercel.app/api/victorias/en-un-anio',
+    );
+    final response = await http.get(uri);
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonMap = json.decode(response.body);
+      final List<dynamic> data = jsonMap['data'] ?? [];
+      // Ordenar de mayor a menor por victorias
+      data.sort(
+        (a, b) => (b['victorias'] as int).compareTo(a['victorias'] as int),
+      );
+      return data.map<Map<String, dynamic>>((e) {
+        return {
+          'piloto': (e['piloto'] ?? '').toString(),
+          'pais': (e['pais'] ?? ''),
+          'temporada': e['temporada'] is int
+              ? e['temporada']
+              : int.tryParse(e['temporada']?.toString() ?? '') ?? 0,
+          'victorias': e['victorias'] is int
+              ? e['victorias']
+              : int.tryParse(e['victorias']?.toString() ?? '') ?? 0,
+          'carreras_totales': e['carreras_totales'] is int
+              ? e['carreras_totales']
+              : int.tryParse(e['carreras_totales']?.toString() ?? '') ?? 0,
+          'porcentaje': e['porcentaje'] is num
+              ? e['porcentaje']
+              : double.tryParse(e['porcentaje']?.toString() ?? '') ?? 0.0,
+        };
+      }).toList();
+    } else {
+      throw Exception(
+        'Error al obtener victorias en un año: ${response.statusCode}',
+      );
+    }
   }
 
   Future<List<Map<String, dynamic>>>
   obtenerPilotosPorAniosConVictorias() async {
-    return [
-      {
-        'nombre': 'Lewis',
-        'apellido': 'Hamilton',
-        'pais': 'United Kingdom',
-        'anios': 16,
-      },
-    ];
+    final uri = Uri.parse(
+      'https://f1-api-one.vercel.app/api/victorias/numeros-anios',
+    );
+    final response = await http.get(uri);
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonMap = json.decode(response.body);
+      final List<dynamic> data = jsonMap['data'] ?? [];
+      // Ordenar de mayor a menor por años
+      data.sort((a, b) => (b['anios'] as int).compareTo(a['anios'] as int));
+      return data.map<Map<String, dynamic>>((e) {
+        return {
+          'nombre': (e['nombre'] ?? '').toString(),
+          'anios': e['anios'] is int
+              ? e['anios']
+              : int.tryParse(e['anios']?.toString() ?? '') ?? 0,
+        };
+      }).toList();
+    } else {
+      throw Exception(
+        'Error al obtener años con victorias: [response.statusCode]',
+      );
+    }
   }
 
   Future<List<Map<String, dynamic>>> obtenerCarrerasAntesDeVictoria() async {

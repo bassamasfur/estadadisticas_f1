@@ -55,11 +55,16 @@ class _VictoriasEnUnAnioViewState extends State<VictoriasEnUnAnioView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Victorias - En un año'),
+        title: const Text(
+          'Victorias - En un año',
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
         elevation: 0,
+        backgroundColor: const Color(0xFF0F172A),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      backgroundColor: const Color(0xFFF3F4F6),
+      backgroundColor: const Color(0xFF0F172A),
       body: _cargando
           ? const Center(child: CircularProgressIndicator())
           : _error != null
@@ -136,14 +141,14 @@ class _RecordTemporadaCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF1E293B),
         borderRadius: BorderRadius.circular(12),
         border: posicion <= 3
             ? Border.all(color: const Color(0xFFE10600), width: 2)
             : null,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withOpacity(0.15),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -189,6 +194,7 @@ class _RecordTemporadaCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
                       ),
                       const SizedBox(width: 6),
