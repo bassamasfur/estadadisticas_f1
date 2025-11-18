@@ -71,7 +71,7 @@ class _VictoriasVueltaRapidaViewState extends State<VictoriasVueltaRapidaView> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: ExpansionTile(
+                  child: ListTile(
                     leading: CircleAvatar(
                       backgroundColor: const Color(0xFFFF6F00),
                       child: Text(
@@ -82,90 +82,31 @@ class _VictoriasVueltaRapidaViewState extends State<VictoriasVueltaRapidaView> {
                         ),
                       ),
                     ),
-                    title: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            '${piloto['nombre']} ${piloto['apellido']}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 6,
-                          ),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFFF6F00),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Text(
-                            '${piloto['victorias_con_vuelta_rapida']}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ],
+                    title: Text(
+                      piloto['nombre'],
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
-                    subtitle: Padding(
-                      padding: const EdgeInsets.only(top: 4),
+                    trailing: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFF6F00),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                       child: Text(
-                        piloto['pais'] as String,
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
-                      ),
-                    ),
-                    children: [
-                      const Divider(height: 1),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Ejemplos de victorias con vuelta rápida:',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            ...((piloto['ejemplos'] as List).map((ejemplo) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 8),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 4,
-                                      height: 4,
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xFFFF6F00),
-                                        shape: BoxShape.circle,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Expanded(
-                                      child: Text(
-                                        '${ejemplo['carrera']} ${ejemplo['año']} (${ejemplo['vuelta_rapida']})',
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.grey[700],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }).toList()),
-                          ],
+                        piloto['victoria'],
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 );
               },

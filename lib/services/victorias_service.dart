@@ -144,22 +144,25 @@ class VictoriasService {
   }
 
   Future<List<Map<String, dynamic>>> obtenerVictoriasConVueltaRapida() async {
-    return [
-      {
-        'nombre': 'Lewis',
-        'apellido': 'Hamilton',
-        'pais': 'United Kingdom',
-        'victoria': 'Gran Bretaña 2020',
-        'vuelta_rapida': true,
-      },
-      {
-        'nombre': 'Max',
-        'apellido': 'Verstappen',
-        'pais': 'Netherlands',
-        'victoria': 'Austria 2021',
-        'vuelta_rapida': true,
-      },
-    ];
+    final uri = Uri.parse(
+      'https://f1-api-one.vercel.app/api/victorias/victoria-vuelta-fast',
+    );
+    final response = await http.get(uri);
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonMap = json.decode(response.body);
+      final List<dynamic> data = jsonMap['data'] ?? [];
+      return data.map<Map<String, dynamic>>((e) {
+        return {
+          'nombre': (e['nombre'] ?? '').toString(),
+          'victoria': (e['victoria'] ?? '').toString(),
+          'vuelta_rapida': e['vuelta_rapida'] == true,
+        };
+      }).toList();
+    } else {
+      throw Exception(
+        'Error al obtener victorias con vuelta rápida: ${response.statusCode}',
+      );
+    }
   }
 
   Future<List<Map<String, dynamic>>> obtenerVictoriasConsecutivas() async {
