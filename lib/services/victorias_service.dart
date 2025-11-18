@@ -154,7 +154,7 @@ class VictoriasService {
       return data.map<Map<String, dynamic>>((e) {
         return {
           'nombre': (e['nombre'] ?? '').toString(),
-          'victoria': (e['victoria'] ?? '').toString(),
+          'victorias': (e['victorias'] ?? '').toString(),
           'vuelta_rapida': e['vuelta_rapida'] == true,
         };
       }).toList();
