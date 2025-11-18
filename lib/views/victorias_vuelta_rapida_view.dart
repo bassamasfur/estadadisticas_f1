@@ -35,11 +35,16 @@ class _VictoriasVueltaRapidaViewState extends State<VictoriasVueltaRapidaView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Victoria y vuelta rápida'),
+        title: const Text(
+          'Victoria y vuelta rápida',
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
         elevation: 0,
+        backgroundColor: const Color(0xFF181C24),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      backgroundColor: const Color(0xFFF3F4F6),
+      backgroundColor: const Color(0xFF181C24),
       body: _cargando
           ? const Center(
               child: Column(
@@ -49,17 +54,22 @@ class _VictoriasVueltaRapidaViewState extends State<VictoriasVueltaRapidaView> {
                   SizedBox(height: 16),
                   Text(
                     'Cargando datos históricos...',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    style: TextStyle(fontSize: 14, color: Colors.white70),
                   ),
                   Text(
                     'Esto puede tomar unos momentos',
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                    style: TextStyle(fontSize: 12, color: Colors.white38),
                   ),
                 ],
               ),
             )
           : _pilotos.isEmpty
-          ? const Center(child: Text('No hay datos disponibles'))
+          ? const Center(
+              child: Text(
+                'No hay datos disponibles',
+                style: TextStyle(color: Colors.white),
+              ),
+            )
           : ListView.builder(
               padding: const EdgeInsets.all(16),
               itemCount: _pilotos.length,
@@ -68,6 +78,7 @@ class _VictoriasVueltaRapidaViewState extends State<VictoriasVueltaRapidaView> {
                 return Card(
                   margin: const EdgeInsets.only(bottom: 12),
                   elevation: 2,
+                  color: const Color(0xFF23283A),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -87,6 +98,7 @@ class _VictoriasVueltaRapidaViewState extends State<VictoriasVueltaRapidaView> {
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
+                        color: Colors.white,
                       ),
                     ),
                     trailing: Container(

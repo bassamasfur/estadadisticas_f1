@@ -43,17 +43,32 @@ class _VictoriasSinPoleViewState extends State<VictoriasSinPoleView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Victorias sin pole position'),
+        title: const Text(
+          'Victorias sin pole position',
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
         elevation: 0,
+        backgroundColor: const Color(0xFF181C24),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      backgroundColor: const Color(0xFFF3F4F6),
+      backgroundColor: const Color(0xFF181C24),
       body: _cargando
           ? const Center(child: CircularProgressIndicator())
           : _error != null
-          ? Center(child: Text('Error: $_error'))
+          ? Center(
+              child: Text(
+                'Error: $_error',
+                style: TextStyle(color: Colors.white),
+              ),
+            )
           : _pilotos.isEmpty
-          ? const Center(child: Text('No hay datos disponibles'))
+          ? const Center(
+              child: Text(
+                'No hay datos disponibles',
+                style: TextStyle(color: Colors.white),
+              ),
+            )
           : ListView.builder(
               padding: const EdgeInsets.all(16),
               itemCount: _pilotos.length,
@@ -61,10 +76,10 @@ class _VictoriasSinPoleViewState extends State<VictoriasSinPoleView> {
                 final piloto = _pilotos[index];
                 final nombre = piloto['nombre'] ?? '';
                 final victoria = piloto['victoria'] ?? '';
-                final porcentaje = piloto['porcentaje'] ?? 0.0;
                 return Card(
                   margin: const EdgeInsets.only(bottom: 12),
                   elevation: 2,
+                  color: const Color(0xFF23283A),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -79,37 +94,13 @@ class _VictoriasSinPoleViewState extends State<VictoriasSinPoleView> {
                         ),
                       ),
                     ),
-                    title: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            nombre,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 8),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.blueGrey[50],
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            '${porcentaje.toStringAsFixed(1)}%',
-                            style: const TextStyle(
-                              color: Color(0xFF1E88E5),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
-                            ),
-                          ),
-                        ),
-                      ],
+                    title: Text(
+                      nombre,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
                     ),
                     trailing: Container(
                       padding: const EdgeInsets.symmetric(

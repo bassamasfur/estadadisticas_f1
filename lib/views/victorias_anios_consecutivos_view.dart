@@ -57,7 +57,10 @@ class _VictoriasAniosConsecutivosViewState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Años consecutivos'),
+        title: const Text(
+          'Años consecutivos',
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: const Color(0xFF181C24),
