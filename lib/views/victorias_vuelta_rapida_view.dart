@@ -99,7 +99,9 @@ class _VictoriasVueltaRapidaViewState extends State<VictoriasVueltaRapidaView> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        piloto['victoria'],
+                        (int.tryParse(piloto['victoria']?.toString() ?? '') ??
+                                0)
+                            .toString(),
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
