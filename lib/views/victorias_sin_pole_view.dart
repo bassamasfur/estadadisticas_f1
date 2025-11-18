@@ -1,22 +1,43 @@
 import 'package:flutter/material.dart';
+import '../services/victorias_service.dart';
 
-class VictoriasSinPoleView extends StatelessWidget {
+class VictoriasSinPoleView extends StatefulWidget {
   const VictoriasSinPoleView({super.key});
 
-  final List<Map<String, String>> pilotos = const [
-    {
-      'nombre': 'Fernando',
-      'apellido': 'Alonso',
-      'pais': 'España',
-      'victoria': 'Hungría 2003',
-    },
-    {
-      'nombre': 'Jenson',
-      'apellido': 'Button',
-      'pais': 'Reino Unido',
-      'victoria': 'Hungría 2006',
-    },
-  ];
+  @override
+  State<VictoriasSinPoleView> createState() => _VictoriasSinPoleViewState();
+}
+
+class _VictoriasSinPoleViewState extends State<VictoriasSinPoleView> {
+  final VictoriasService _service = VictoriasService();
+  List<Map<String, dynamic>> _pilotos = [];
+  bool _cargando = true;
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    _cargarDatos();
+  }
+
+  Future<void> _cargarDatos() async {
+    try {
+      setState(() {
+        _cargando = true;
+        _error = null;
+      });
+      final datos = await _service.obtenerVictoriasSinPole();
+      setState(() {
+        _pilotos = datos;
+        _cargando = false;
+      });
+    } catch (e) {
+      setState(() {
+        _error = e.toString();
+        _cargando = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +48,20 @@ class VictoriasSinPoleView extends StatelessWidget {
         elevation: 0,
       ),
       backgroundColor: const Color(0xFFF3F4F6),
-      body: pilotos.isEmpty
+      body: _cargando
+          ? const Center(child: CircularProgressIndicator())
+          : _error != null
+          ? Center(child: Text('Error: $_error'))
+          : _pilotos.isEmpty
           ? const Center(child: Text('No hay datos disponibles'))
           : ListView.builder(
               padding: const EdgeInsets.all(16),
-              itemCount: pilotos.length,
+              itemCount: _pilotos.length,
               itemBuilder: (context, index) {
-                final piloto = pilotos[index];
+                final piloto = _pilotos[index];
                 final nombre = piloto['nombre'] ?? '';
-                final apellido = piloto['apellido'] ?? '';
-                final pais = piloto['pais'] ?? '';
                 final victoria = piloto['victoria'] ?? '';
+                final porcentaje = piloto['porcentaje'] ?? 0.0;
                 return Card(
                   margin: const EdgeInsets.only(bottom: 12),
                   elevation: 2,
@@ -55,16 +79,37 @@ class VictoriasSinPoleView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    title: Text(
-                      '$nombre${apellido.isNotEmpty ? ' $apellido' : ''}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    subtitle: Text(
-                      pais,
-                      style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                    title: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            nombre,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(left: 8),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey[50],
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            '${porcentaje.toStringAsFixed(1)}%',
+                            style: const TextStyle(
+                              color: Color(0xFF1E88E5),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     trailing: Container(
                       padding: const EdgeInsets.symmetric(

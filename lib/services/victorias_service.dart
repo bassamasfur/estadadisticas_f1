@@ -110,22 +110,37 @@ class VictoriasService {
   }
 
   Future<List<Map<String, dynamic>>> obtenerVictoriasSinPole() async {
-    return [
-      {
-        'nombre': 'Fernando',
-        'apellido': 'Alonso',
-        'pais': 'Spain',
-        'victoria': 'Hungría 2003',
-        'pole': false,
-      },
-      {
-        'nombre': 'Jenson',
-        'apellido': 'Button',
-        'pais': 'United Kingdom',
-        'victoria': 'Hungría 2006',
-        'pole': false,
-      },
-    ];
+    final uri = Uri.parse(
+      'https://f1-api-one.vercel.app/api/victorias/victoria-sin-pole',
+    );
+    final response = await http.get(uri);
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonMap = json.decode(response.body);
+      final List<dynamic> data = jsonMap['data'] ?? [];
+      // Ordenar por el número de victorias (de mayor a menor) usando el campo 'victoria' de la API
+      data.sort((a, b) {
+        final intA = a['victoria'] is int
+            ? a['victoria']
+            : int.tryParse(a['victoria']?.toString() ?? '') ?? 0;
+        final intB = b['victoria'] is int
+            ? b['victoria']
+            : int.tryParse(b['victoria']?.toString() ?? '') ?? 0;
+        return intB.compareTo(intA);
+      });
+      return data.map<Map<String, dynamic>>((e) {
+        return {
+          'nombre': (e['nombre'] ?? '').toString(),
+          'victoria': (e['victoria'] ?? '').toString(),
+          'porcentaje': e['porcentaje'] is num
+              ? e['porcentaje'].toDouble()
+              : double.tryParse(e['porcentaje']?.toString() ?? '') ?? 0.0,
+        };
+      }).toList();
+    } else {
+      throw Exception(
+        'Error al obtener victorias sin pole: ${response.statusCode}',
+      );
+    }
   }
 
   Future<List<Map<String, dynamic>>> obtenerVictoriasConVueltaRapida() async {
