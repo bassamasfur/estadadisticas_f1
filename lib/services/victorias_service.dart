@@ -83,14 +83,30 @@ class VictoriasService {
   }
 
   Future<List<Map<String, dynamic>>> obtenerCarrerasAntesDeVictoria() async {
-    return [
-      {
-        'nombre': 'Sergio',
-        'apellido': 'Pérez',
-        'pais': 'Mexico',
-        'carreras': 190,
-      },
-    ];
+    final uri = Uri.parse(
+      'https://f1-api-one.vercel.app/api/victorias/gp-antes-victoria',
+    );
+    final response = await http.get(uri);
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonMap = json.decode(response.body);
+      final List<dynamic> data = jsonMap['data'] ?? [];
+      return data.map<Map<String, dynamic>>((e) {
+        return {
+          'nombre': (e['nombre'] ?? '').toString(),
+          'carreras': e['carreras'] is int
+              ? e['carreras']
+              : int.tryParse(e['carreras']?.toString() ?? '') ?? 0,
+          'gp': (e['gp'] ?? '').toString(),
+          'anio': e['anio'] is int
+              ? e['anio']
+              : int.tryParse(e['anio']?.toString() ?? '') ?? 0,
+        };
+      }).toList();
+    } else {
+      throw Exception(
+        'Error al obtener carreras antes de victoria: ${response.statusCode}',
+      );
+    }
   }
 
   Future<List<Map<String, dynamic>>> obtenerVictoriasSinPole() async {
@@ -153,22 +169,32 @@ class VictoriasService {
 
   Future<List<Map<String, dynamic>>>
   obtenerAniosConsecutivosConVictorias() async {
-    return [
-      {
-        'nombre': 'Lewis',
-        'apellido': 'Hamilton',
-        'pais': 'United Kingdom',
-        'anios_consecutivos': 15,
-        'periodo': '2007-2021',
-      },
-      {
-        'nombre': 'Michael',
-        'apellido': 'Schumacher',
-        'pais': 'Germany',
-        'anios_consecutivos': 15,
-        'periodo': '1992-2006',
-      },
-    ];
+    final uri = Uri.parse(
+      'https://f1-api-one.vercel.app/api/victorias/annee-consecutive',
+    );
+    final response = await http.get(uri);
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonMap = json.decode(response.body);
+      final List<dynamic> data = jsonMap['data'] ?? [];
+      return data.map<Map<String, dynamic>>((e) {
+        return {
+          'nombre': (e['nombre'] ?? '').toString(),
+          'anios': e['anios_consecutivos'] is int
+              ? e['anios_consecutivos']
+              : int.tryParse(e['anios_consecutivos']?.toString() ?? '') ?? 0,
+          'inicio': e['inicio'] is int
+              ? e['inicio'].toString()
+              : (e['inicio'] ?? '').toString(),
+          'fin': e['fin'] is int
+              ? e['fin'].toString()
+              : (e['fin'] ?? '').toString(),
+        };
+      }).toList();
+    } else {
+      throw Exception(
+        'Error al obtener años consecutivos con victorias: ${response.statusCode}',
+      );
+    }
   }
 
   Future<List<Map<String, dynamic>>> obtenerVictoriasPorEquipo() async {

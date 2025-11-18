@@ -1,7 +1,7 @@
+// Página: Carreras antes de primera victoria
 import 'package:flutter/material.dart';
 import '../services/victorias_service.dart';
 
-/// Vista que muestra carreras disputadas antes de primera victoria
 class VictoriasCarrerasAntesView extends StatefulWidget {
   const VictoriasCarrerasAntesView({super.key});
 
@@ -29,9 +29,16 @@ class _VictoriasCarrerasAntesViewState
         _cargando = true;
         _error = null;
       });
-
       final datos = await _service.obtenerCarrerasAntesDeVictoria();
-
+      datos.sort((a, b) {
+        final intA = a['carreras'] is int
+            ? a['carreras']
+            : int.tryParse(a['carreras']?.toString() ?? '') ?? 0;
+        final intB = b['carreras'] is int
+            ? b['carreras']
+            : int.tryParse(b['carreras']?.toString() ?? '') ?? 0;
+        return intB.compareTo(intA);
+      });
       setState(() {
         _pilotos = datos;
         _cargando = false;
@@ -51,8 +58,10 @@ class _VictoriasCarrerasAntesViewState
         title: const Text('Carreras antes de victoria'),
         centerTitle: true,
         elevation: 0,
+        backgroundColor: const Color(0xFF181C24),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      backgroundColor: const Color(0xFFF3F4F6),
+      backgroundColor: const Color(0xFF181C24),
       body: _cargando
           ? const Center(child: CircularProgressIndicator())
           : _error != null
@@ -77,22 +86,25 @@ class _VictoriasCarrerasAntesViewState
               itemBuilder: (context, index) {
                 final piloto = _pilotos[index];
                 final posicion = index + 1;
-                final carreras = piloto['carreras'] as int;
+                final carreras = piloto['carreras'] is int
+                    ? piloto['carreras']
+                    : int.tryParse(piloto['carreras']?.toString() ?? '') ?? 0;
+                final nombre = (piloto['nombre'] ?? '').toString();
 
                 // Color según posición
-                Color backgroundColor = Colors.white;
+                Color backgroundColor = const Color(0xFF23283A);
                 Color? badgeColor;
                 if (posicion == 1) {
-                  backgroundColor = const Color(0xFFFFEBEE);
+                  backgroundColor = const Color(0xFF2C3146);
                   badgeColor = const Color(0xFFE57373);
                 } else if (posicion == 2) {
-                  backgroundColor = const Color(0xFFFFF3E0);
+                  backgroundColor = const Color(0xFF23283A);
                   badgeColor = const Color(0xFFFFB74D);
                 } else if (posicion == 3) {
-                  backgroundColor = const Color(0xFFFFF9C4);
+                  backgroundColor = const Color(0xFF23283A);
                   badgeColor = const Color(0xFFFFF176);
                 } else if (carreras == 0) {
-                  backgroundColor = const Color(0xFFE8F5E9);
+                  backgroundColor = const Color(0xFF23283A);
                   badgeColor = const Color(0xFF66BB6A);
                 }
 
@@ -103,7 +115,7 @@ class _VictoriasCarrerasAntesViewState
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.05),
+                        color: Colors.black.withOpacity(0.05),
                         blurRadius: 4,
                         offset: const Offset(0, 2),
                       ),
@@ -135,18 +147,11 @@ class _VictoriasCarrerasAntesViewState
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                '${piloto['nombre']} ${piloto['apellido']}',
+                                nombre,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                piloto['pais'] as String,
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 14,
+                                  color: Colors.white,
                                 ),
                               ),
                             ],
@@ -154,17 +159,15 @@ class _VictoriasCarrerasAntesViewState
                         ),
                         // Badge de carreras
                         Container(
-                          constraints: const BoxConstraints(minWidth: 70),
+                          width: 70,
                           padding: const EdgeInsets.symmetric(
                             horizontal: 12,
                             vertical: 8,
                           ),
                           decoration: BoxDecoration(
                             color: carreras == 0
-                                ? const Color(0xFF66BB6A).withValues(alpha: 0.1)
-                                : const Color(
-                                    0xFFEF5350,
-                                  ).withValues(alpha: 0.1),
+                                ? const Color(0xFF66BB6A).withOpacity(0.1)
+                                : const Color(0xFFEF5350).withOpacity(0.1),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Column(
@@ -184,9 +187,9 @@ class _VictoriasCarrerasAntesViewState
                               const SizedBox(height: 2),
                               Text(
                                 carreras == 0 ? 'carrera' : 'carreras',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 11,
-                                  color: Colors.grey[600],
+                                  color: Color(0xFFB0BEC5),
                                   height: 1.0,
                                 ),
                               ),

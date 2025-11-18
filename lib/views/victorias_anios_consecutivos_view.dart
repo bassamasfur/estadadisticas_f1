@@ -31,7 +31,16 @@ class _VictoriasAniosConsecutivosViewState
       });
 
       final datos = await _service.obtenerAniosConsecutivosConVictorias();
-
+      // Ordenar de mayor a menor por años consecutivos
+      datos.sort((a, b) {
+        final intA = a['anios'] is int
+            ? a['anios']
+            : int.tryParse(a['anios']?.toString() ?? '') ?? 0;
+        final intB = b['anios'] is int
+            ? b['anios']
+            : int.tryParse(b['anios']?.toString() ?? '') ?? 0;
+        return intB.compareTo(intA);
+      });
       setState(() {
         _pilotos = datos;
         _cargando = false;
@@ -51,8 +60,10 @@ class _VictoriasAniosConsecutivosViewState
         title: const Text('Años consecutivos'),
         centerTitle: true,
         elevation: 0,
+        backgroundColor: const Color(0xFF181C24),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      backgroundColor: const Color(0xFFF3F4F6),
+      backgroundColor: const Color(0xFF181C24),
       body: _cargando
           ? const Center(child: CircularProgressIndicator())
           : _error != null
@@ -77,20 +88,27 @@ class _VictoriasAniosConsecutivosViewState
               itemBuilder: (context, index) {
                 final piloto = _pilotos[index];
                 final posicion = index + 1;
-                final aniosConsecutivos = piloto['anios_consecutivos'] as int;
-                final periodo = piloto['periodo'] as String;
+                final aniosConsecutivos = piloto['anios'] is int
+                    ? piloto['anios']
+                    : int.tryParse(piloto['anios']?.toString() ?? '') ?? 0;
+                final nombre = (piloto['nombre'] ?? '').toString();
+                final inicio = piloto['inicio']?.toString() ?? '';
+                final fin = piloto['fin']?.toString() ?? '';
+                final periodo = (inicio.isNotEmpty && fin.isNotEmpty)
+                    ? '$inicio - $fin'
+                    : '';
 
                 // Color según posición
-                Color backgroundColor = Colors.white;
+                Color backgroundColor = const Color(0xFF23283A);
                 Color? badgeColor;
                 if (posicion == 1) {
-                  backgroundColor = const Color(0xFFFFF9C4);
+                  backgroundColor = const Color(0xFF2C3146);
                   badgeColor = const Color(0xFFFBC02D);
                 } else if (posicion == 2) {
-                  backgroundColor = const Color(0xFFE0E0E0);
+                  backgroundColor = const Color(0xFF23283A);
                   badgeColor = const Color(0xFF757575);
                 } else if (posicion == 3) {
-                  backgroundColor = const Color(0xFFFFE0B2);
+                  backgroundColor = const Color(0xFF23283A);
                   badgeColor = const Color(0xFFFF6F00);
                 }
 
@@ -101,7 +119,7 @@ class _VictoriasAniosConsecutivosViewState
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.05),
+                        color: Colors.black.withOpacity(0.05),
                         blurRadius: 4,
                         offset: const Offset(0, 2),
                       ),
@@ -133,41 +151,35 @@ class _VictoriasAniosConsecutivosViewState
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                '${piloto['nombre']} ${piloto['apellido']}',
+                                nombre,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
+                                  color: Colors.white,
                                 ),
                               ),
                               const SizedBox(height: 4),
-                              Text(
-                                piloto['pais'] as String,
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 14,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 2,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: const Color(
-                                    0xFF42A5F5,
-                                  ).withValues(alpha: 0.2),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text(
-                                  periodo,
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                    color: Color(0xFF1976D2),
-                                    fontWeight: FontWeight.bold,
+                              if (periodo.isNotEmpty)
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 2,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: const Color(
+                                      0xFF42A5F5,
+                                    ).withOpacity(0.2),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Text(
+                                    periodo,
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                      color: Color(0xFF90CAF9),
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
-                              ),
                             ],
                           ),
                         ),
@@ -179,9 +191,7 @@ class _VictoriasAniosConsecutivosViewState
                             vertical: 8,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(
-                              0xFF66BB6A,
-                            ).withValues(alpha: 0.1),
+                            color: const Color(0xFF66BB6A).withOpacity(0.1),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Column(
@@ -201,7 +211,7 @@ class _VictoriasAniosConsecutivosViewState
                                 aniosConsecutivos == 1 ? 'año' : 'años',
                                 style: TextStyle(
                                   fontSize: 11,
-                                  color: Colors.grey[600],
+                                  color: Color(0xFFB0BEC5),
                                   height: 1.0,
                                 ),
                               ),
