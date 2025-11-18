@@ -148,7 +148,7 @@ class _RecordTemporadaCard extends StatelessWidget {
             : null,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withAlpha((0.15 * 255).toInt()),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),

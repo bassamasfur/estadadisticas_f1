@@ -115,7 +115,7 @@ class _VictoriasCarrerasAntesViewState
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withAlpha((0.05 * 255).toInt()),
                         blurRadius: 4,
                         offset: const Offset(0, 2),
                       ),
@@ -166,8 +166,12 @@ class _VictoriasCarrerasAntesViewState
                           ),
                           decoration: BoxDecoration(
                             color: carreras == 0
-                                ? const Color(0xFF66BB6A).withOpacity(0.1)
-                                : const Color(0xFFEF5350).withOpacity(0.1),
+                                ? const Color(
+                                    0xFF66BB6A,
+                                  ).withAlpha((0.1 * 255).toInt())
+                                : const Color(
+                                    0xFFEF5350,
+                                  ).withAlpha((0.1 * 255).toInt()),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Column(
