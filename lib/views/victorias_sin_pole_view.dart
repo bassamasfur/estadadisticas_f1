@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class VictoriasSinPoleView extends StatelessWidget {
-  const VictoriasSinPoleView({Key? key}) : super(key: key);
+  const VictoriasSinPoleView({super.key});
 
   final List<Map<String, String>> pilotos = const [
     {

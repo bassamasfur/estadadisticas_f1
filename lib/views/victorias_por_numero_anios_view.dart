@@ -102,7 +102,7 @@ class _VictoriasPorNumeroAniosViewState
                         : null,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.15),
+                        color: Colors.black.withAlpha((0.15 * 255).toInt()),
                         blurRadius: 4,
                         offset: const Offset(0, 2),
                       ),
@@ -146,7 +146,9 @@ class _VictoriasPorNumeroAniosViewState
                             vertical: 8,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF4CAF50).withOpacity(0.15),
+                            color: const Color(
+                              0xFF4CAF50,
+                            ).withAlpha((0.15 * 255).toInt()),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Column(
