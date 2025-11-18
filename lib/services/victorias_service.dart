@@ -151,6 +151,16 @@ class VictoriasService {
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonMap = json.decode(response.body);
       final List<dynamic> data = jsonMap['data'] ?? [];
+      // Ordenar por el número de victorias (de mayor a menor)
+      data.sort((a, b) {
+        final intA = a['victorias'] is int
+            ? a['victorias']
+            : int.tryParse(a['victorias']?.toString() ?? '') ?? 0;
+        final intB = b['victorias'] is int
+            ? b['victorias']
+            : int.tryParse(b['victorias']?.toString() ?? '') ?? 0;
+        return intB.compareTo(intA);
+      });
       return data.map<Map<String, dynamic>>((e) {
         return {
           'nombre': (e['nombre'] ?? '').toString(),
