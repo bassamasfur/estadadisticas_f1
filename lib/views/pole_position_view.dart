@@ -43,7 +43,7 @@ class PolePositionView extends StatelessWidget {
               border: Border.all(color: const Color(0xFF334155), width: 1.2),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
+                  color: Colors.black.withAlpha((0.08 * 255).toInt()),
                   blurRadius: 6,
                   offset: const Offset(0, 1),
                 ),

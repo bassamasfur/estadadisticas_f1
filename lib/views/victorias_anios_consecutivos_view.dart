@@ -119,7 +119,7 @@ class _VictoriasAniosConsecutivosViewState
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withAlpha((0.05 * 255).toInt()),
                         blurRadius: 4,
                         offset: const Offset(0, 2),
                       ),
@@ -168,7 +168,7 @@ class _VictoriasAniosConsecutivosViewState
                                   decoration: BoxDecoration(
                                     color: const Color(
                                       0xFF42A5F5,
-                                    ).withOpacity(0.2),
+                                    ).withAlpha((0.2 * 255).toInt()),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Text(
@@ -191,7 +191,9 @@ class _VictoriasAniosConsecutivosViewState
                             vertical: 8,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF66BB6A).withOpacity(0.1),
+                            color: const Color(
+                              0xFF66BB6A,
+                            ).withAlpha((0.1 * 255).toInt()),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Column(
