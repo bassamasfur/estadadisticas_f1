@@ -63,6 +63,7 @@ class _PoleConsecutivoDebutViewState extends State<PoleConsecutivoDebutView> {
           'Pole Position consecutivas desde inicio',
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
         ),
         backgroundColor: const Color(0xFF0F172A),
         foregroundColor: Colors.white,

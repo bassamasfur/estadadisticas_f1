@@ -35,7 +35,12 @@ class _PoleNumeroAniosViewState extends State<PoleNumeroAniosView> {
         final json = jsonDecode(response.body);
         final dataList = (json['data'] as List<dynamic>);
         setState(() {
-          _data = dataList;
+          _data = dataList
+            ..sort((a, b) {
+              final tA = int.tryParse(a['temporada'].toString()) ?? 0;
+              final tB = int.tryParse(b['temporada'].toString()) ?? 0;
+              return tA.compareTo(tB);
+            });
           _loading = false;
         });
       } else {
@@ -61,6 +66,7 @@ class _PoleNumeroAniosViewState extends State<PoleNumeroAniosView> {
           'Pole Position por número de años',
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
         ),
         backgroundColor: const Color(0xFF0F172A),
         foregroundColor: Colors.white,
