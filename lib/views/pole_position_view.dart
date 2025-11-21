@@ -48,6 +48,8 @@ class PolePositionView extends StatelessWidget {
                 Navigator.pushNamed(context, '/pole-en-anio');
               } else if (index == 4) {
                 Navigator.pushNamed(context, '/pole-numero-anios');
+              } else if (index == 5) {
+                Navigator.pushNamed(context, '/pole-anios-consecutivos');
               }
               // Aquí puedes agregar navegación para otras opciones
             },
