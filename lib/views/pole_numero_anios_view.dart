@@ -39,7 +39,7 @@ class _PoleNumeroAniosViewState extends State<PoleNumeroAniosView> {
             ..sort((a, b) {
               final tA = int.tryParse(a['temporada'].toString()) ?? 0;
               final tB = int.tryParse(b['temporada'].toString()) ?? 0;
-              return tA.compareTo(tB);
+              return tB.compareTo(tA);
             });
           _loading = false;
         });

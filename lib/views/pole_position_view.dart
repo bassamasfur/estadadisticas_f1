@@ -11,7 +11,7 @@ class PolePositionView extends StatelessWidget {
     'En un año',
     'Por número de años',
     'Años consecutivos',
-    'Grandes Premios disputados antes',
+    'Grandes Premios previos',
     'Por Gran Premio diferente',
     'Pole position y victoria',
     'Pole position sin victoria',
