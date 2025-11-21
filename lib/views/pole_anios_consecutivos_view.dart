@@ -35,13 +35,13 @@ class _PoleAniosConsecutivosViewState extends State<PoleAniosConsecutivosView> {
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
         final dataList = (json['data'] as List<dynamic>);
+        dataList.sort((a, b) {
+          final tA = int.tryParse(a['temporadas']?.toString() ?? '') ?? 0;
+          final tB = int.tryParse(b['temporadas']?.toString() ?? '') ?? 0;
+          return tB.compareTo(tA);
+        });
         setState(() {
-          _data = dataList
-            ..sort((a, b) {
-              final tA = int.tryParse(a['temporadas'].toString()) ?? 0;
-              final tB = int.tryParse(b['temporadas'].toString()) ?? 0;
-              return tB.compareTo(tA);
-            });
+          _data = dataList;
           _loading = false;
         });
       } else {
@@ -86,10 +86,10 @@ class _PoleAniosConsecutivosViewState extends State<PoleAniosConsecutivosView> {
               separatorBuilder: (_, __) => const SizedBox(height: 10),
               itemBuilder: (context, index) {
                 final item = _data[index];
-                final piloto = item['nombre'] ?? '';
-                final temporadas = item['temporadas'] ?? '';
-                final inicio = item['inicio'] ?? '';
-                final fin = item['fin'] ?? '';
+                final piloto = item['nombre']?.toString() ?? '';
+                final temporadas = item['temporadas']?.toString() ?? '';
+                final inicio = item['inicio']?.toString() ?? '';
+                final fin = item['fin']?.toString() ?? '';
                 Color bgColor;
                 Color borderColor = Colors.transparent;
                 Color numColor;
