@@ -13,7 +13,7 @@ class PoleAniosConsecutivosView extends StatefulWidget {
 class _PoleAniosConsecutivosViewState extends State<PoleAniosConsecutivosView> {
   bool _loading = true;
   String? _error;
-  List<dynamic> _data = [];
+  List<Map<String, dynamic>> _data = [];
 
   @override
   void initState() {
@@ -29,15 +29,20 @@ class _PoleAniosConsecutivosViewState extends State<PoleAniosConsecutivosView> {
     try {
       final response = await http.get(
         Uri.parse(
-          'https://f1-3z3ogk27u-bassans-projects.vercel.app/api/poles/poles-annee-consecutive',
+          'https://f1-l1f0twqsl-bassans-projects.vercel.app/api/poles/poles-annee-consecutive',
         ),
       );
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
-        final dataList = (json['data'] as List<dynamic>);
+        final List<Map<String, dynamic>> dataList =
+            List<Map<String, dynamic>>.from(json['data']);
         dataList.sort((a, b) {
-          final tA = int.tryParse(a['temporadas']?.toString() ?? '') ?? 0;
-          final tB = int.tryParse(b['temporadas']?.toString() ?? '') ?? 0;
+          final tA = a['temporadas'] is int
+              ? a['temporadas']
+              : int.tryParse(a['temporadas'].toString()) ?? 0;
+          final tB = b['temporadas'] is int
+              ? b['temporadas']
+              : int.tryParse(b['temporadas'].toString()) ?? 0;
           return tB.compareTo(tA);
         });
         setState(() {
@@ -90,44 +95,11 @@ class _PoleAniosConsecutivosViewState extends State<PoleAniosConsecutivosView> {
                 final temporadas = item['temporadas']?.toString() ?? '';
                 final inicio = item['inicio']?.toString() ?? '';
                 final fin = item['fin']?.toString() ?? '';
-                Color bgColor;
-                Color borderColor = Colors.transparent;
-                Color numColor;
-                String etiqueta = '';
-                Color etiquetaColor = Colors.transparent;
-                if (index == 0) {
-                  bgColor = const Color(0xFF14532D);
-                  borderColor = const Color(0xFFEF4444);
-                  numColor = const Color(0xFF22C55E);
-                  etiqueta = 'RÉCORD';
-                  etiquetaColor = const Color(0xFFFB923C);
-                } else if (index == 1) {
-                  bgColor = const Color(0xFF1E293B);
-                  numColor = const Color(0xFF22C55E);
-                  etiqueta = 'LEYENDA';
-                  etiquetaColor = const Color(0xFFFACC15);
-                } else if (index == 2) {
-                  bgColor = const Color(0xFF1E293B);
-                  numColor = const Color(0xFF22C55E);
-                  etiqueta = 'TOP 3';
-                  etiquetaColor = const Color(0xFF38BDF8);
-                } else {
-                  bgColor = const Color(0xFF1E293B);
-                  numColor = [
-                    const Color(0xFF22C55E),
-                    const Color(0xFFF59E42),
-                    const Color(0xFF3B82F6),
-                    const Color(0xFF3B82F6),
-                  ][index % 4];
-                }
                 return Container(
                   decoration: BoxDecoration(
-                    color: bgColor,
+                    color: const Color(0xFF1E293B),
                     borderRadius: BorderRadius.circular(14),
-                    border: Border.all(
-                      color: borderColor,
-                      width: index < 3 ? 2 : 0.5,
-                    ),
+                    border: Border.all(color: Colors.transparent, width: 1),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.10),
@@ -143,24 +115,18 @@ class _PoleAniosConsecutivosViewState extends State<PoleAniosConsecutivosView> {
                     ),
                     child: Row(
                       children: [
-                        // Número
-                        Column(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: numColor,
-                              radius: 16,
-                              child: Text(
-                                '${index + 1}',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                        CircleAvatar(
+                          backgroundColor: const Color(0xFF22C55E),
+                          radius: 16,
+                          child: Text(
+                            '${index + 1}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
-                          ],
+                          ),
                         ),
                         const SizedBox(width: 14),
-                        // Info piloto y temporadas
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,30 +161,9 @@ class _PoleAniosConsecutivosViewState extends State<PoleAniosConsecutivosView> {
                                   fontSize: 13,
                                 ),
                               ),
-                              if (etiqueta.isNotEmpty)
-                                Container(
-                                  margin: const EdgeInsets.only(top: 4),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 2,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: etiquetaColor,
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
-                                  child: Text(
-                                    etiqueta,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 11,
-                                    ),
-                                  ),
-                                ),
                             ],
                           ),
                         ),
-                        // Icono bandera
                         const SizedBox(width: 10),
                         const Icon(Icons.flag, color: Colors.white, size: 28),
                       ],
