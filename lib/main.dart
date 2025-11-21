@@ -15,6 +15,7 @@ import 'views/pole_numero_view.dart';
 import 'views/pole_consecutivo_view.dart';
 import 'views/pole_consecutivo_debut_view.dart';
 import 'views/pole_en_anio_view.dart';
+import 'views/pole_numero_anios_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -69,6 +70,7 @@ class MyApp extends StatelessWidget {
           '/pole-consecutivo-debut': (context) =>
               const PoleConsecutivoDebutView(),
           '/pole-en-anio': (context) => const PoleEnAnioView(),
+          '/pole-numero-anios': (context) => const PoleNumeroAniosView(),
         },
       ),
     );
