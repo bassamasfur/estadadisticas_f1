@@ -11,6 +11,7 @@ import 'repositories/equipo_repository.dart';
 import 'repositories/carrera_repository.dart';
 import 'services/wikipedia_f1_service.dart';
 import 'views/splash_view.dart';
+import 'views/pole_numero_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
         darkTheme: AppTheme.temaOscuro,
         themeMode: ThemeMode.system,
         home: const SplashView(),
+        routes: {'/pole-numero': (context) => const PoleNumeroView()},
       ),
     );
   }
