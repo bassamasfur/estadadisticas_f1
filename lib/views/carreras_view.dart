@@ -78,27 +78,44 @@ class _CarrerasViewState extends State<CarrerasView> {
                 stops: [0.0, 0.5, 1.0],
               ),
             ),
-            child: ListView(
-              padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                if (proximaCarrera != null) ...[
-                  _ProximaCarreraCard(carrera: proximaCarrera),
-                  const SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      'Todas las carreras',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.titleMedium?.copyWith(color: Colors.white),
-                    ),
+                const SizedBox(height: 16),
+                Text(
+                  'Calendario de Carreras y Próxima Carrera',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    color: Colors.white,
                   ),
-                  const SizedBox(height: 8),
-                ],
-                ...controller.carreras.map(
-                  (carrera) => _CarreraCard(
-                    carrera: carrera,
-                    esProxima: carrera.id == proximaCarrera?.id,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.all(8),
+                    children: [
+                      if (proximaCarrera != null) ...[
+                        _ProximaCarreraCard(carrera: proximaCarrera),
+                        const SizedBox(height: 16),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            'Todas las carreras',
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(color: Colors.white),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+                      ...controller.carreras.map(
+                        (carrera) => _CarreraCard(
+                          carrera: carrera,
+                          esProxima: carrera.id == proximaCarrera?.id,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

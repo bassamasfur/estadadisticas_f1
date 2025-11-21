@@ -75,13 +75,31 @@ class _EquiposViewState extends State<EquiposView> {
                 stops: [0.0, 0.5, 1.0],
               ),
             ),
-            child: ListView.builder(
-              itemCount: controller.equipos.length,
-              padding: const EdgeInsets.all(8),
-              itemBuilder: (context, index) {
-                final equipo = controller.equipos[index];
-                return _EquipoCard(equipo: equipo);
-              },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 16),
+                Text(
+                  'Equipos F1 - Ranking y Títulos',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: controller.equipos.length,
+                    padding: const EdgeInsets.all(8),
+                    itemBuilder: (context, index) {
+                      final equipo = controller.equipos[index];
+                      return _EquipoCard(equipo: equipo);
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         );

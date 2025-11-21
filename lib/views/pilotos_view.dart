@@ -75,13 +75,31 @@ class _PilotosViewState extends State<PilotosView> {
                 stops: [0.0, 0.5, 1.0],
               ),
             ),
-            child: ListView.builder(
-              itemCount: controller.pilotos.length,
-              padding: const EdgeInsets.all(8),
-              itemBuilder: (context, index) {
-                final piloto = controller.pilotos[index];
-                return _PilotoCard(piloto: piloto);
-              },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 16),
+                Text(
+                  'Pilotos F1 - Ranking de Puntos',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: controller.pilotos.length,
+                    padding: const EdgeInsets.all(8),
+                    itemBuilder: (context, index) {
+                      final piloto = controller.pilotos[index];
+                      return _PilotoCard(piloto: piloto);
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         );

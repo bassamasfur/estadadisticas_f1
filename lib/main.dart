@@ -12,6 +12,9 @@ import 'repositories/carrera_repository.dart';
 import 'services/wikipedia_f1_service.dart';
 import 'views/splash_view.dart';
 import 'views/pole_numero_view.dart';
+import 'views/pole_consecutivo_view.dart';
+import 'views/pole_consecutivo_debut_view.dart';
+import 'views/pole_en_anio_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -60,7 +63,13 @@ class MyApp extends StatelessWidget {
         darkTheme: AppTheme.temaOscuro,
         themeMode: ThemeMode.system,
         home: const SplashView(),
-        routes: {'/pole-numero': (context) => const PoleNumeroView()},
+        routes: {
+          '/pole-numero': (context) => const PoleNumeroView(),
+          '/pole-consecutivo': (context) => const PoleConsecutivoView(),
+          '/pole-consecutivo-debut': (context) =>
+              const PoleConsecutivoDebutView(),
+          '/pole-en-anio': (context) => const PoleEnAnioView(),
+        },
       ),
     );
   }

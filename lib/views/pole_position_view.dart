@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pole_numero_view.dart';
+// import removidos porque solo se usan en rutas
 
 class PolePositionView extends StatelessWidget {
   const PolePositionView({super.key});
@@ -40,7 +40,14 @@ class PolePositionView extends StatelessWidget {
             onTap: () {
               if (index == 0) {
                 Navigator.pushNamed(context, '/pole-numero');
+              } else if (index == 1) {
+                Navigator.pushNamed(context, '/pole-consecutivo');
+              } else if (index == 2) {
+                Navigator.pushNamed(context, '/pole-consecutivo-debut');
+              } else if (index == 3) {
+                Navigator.pushNamed(context, '/pole-en-anio');
               }
+              // Aquí puedes agregar navegación para otras opciones
             },
             child: Container(
               margin: const EdgeInsets.only(bottom: 12),
