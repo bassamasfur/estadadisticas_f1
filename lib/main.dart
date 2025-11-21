@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Estadísticas F1',
+        title: '',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.temaClaro,
         darkTheme: AppTheme.temaOscuro,

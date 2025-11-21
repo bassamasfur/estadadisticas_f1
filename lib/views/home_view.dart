@@ -43,7 +43,7 @@ class _HomeViewState extends State<HomeView> {
       backgroundColor: const Color(0xFF0F172A),
       appBar: AppBar(
         title: const Text(
-          'Estadísticas F1',
+          '',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
         ),
         elevation: 0,

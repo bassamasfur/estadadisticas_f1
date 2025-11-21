@@ -78,7 +78,7 @@ class _OpcionListTileState extends State<OpcionListTile> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Row(
                 children: [
                   // Indicador decorativo con gradiente
