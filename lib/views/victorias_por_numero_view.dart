@@ -37,7 +37,7 @@ class _VictoriasPorNumeroViewState extends State<VictoriasPorNumeroView> {
             .map<Map<String, dynamic>>(
               (item) => {
                 'nombre': item['nombre'],
-                'victorias': item['victorias'],
+                'victorias': int.tryParse(item['victorias'].toString()) ?? 0,
                 'porcentaje': item['porcentaje'] is num
                     ? item['porcentaje']
                     : (item['porcentaje'] != null
